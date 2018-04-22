@@ -16,7 +16,7 @@ module.exports = {
 
   overrides: [
     {
-      files: [ "javascript/**/*.js" ],
+      files: [ "**/*.js" ],
 
       parserOptions: {
         ecmaVersion: 2017,
@@ -46,7 +46,7 @@ module.exports = {
     },
     {
       files: [
-        "javascript/test/**/*.js",
+        "test/**/*.js",
       ],
       globals: {
         "beforeEach": true,
