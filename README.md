@@ -4,6 +4,8 @@
 - Queue
 - Tree
 - Binary Search Tree **[DONE]**
+- Red-black Tree
+- AVL Tree
 - Trie
 - Graph
   - Adjacency list
