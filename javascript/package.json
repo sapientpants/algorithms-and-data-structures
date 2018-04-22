@@ -1,0 +1,28 @@
+{
+  "name": "data-structures",
+  "version": "1.0.0",
+  "description": "Standard data structures implementations in Javascript.",
+  "scripts": {
+    "doc": "./node_modules/.bin/yuidoc --outdir docs src",
+    "test": "mocha --require babel-register"
+  },
+  "bugs": {
+    "url": "https://github.com/sapientpants/data-structures/issues"
+  },
+  "repository": "https://github.com/github:sapientpants/data-structures",
+  "author": "Marc Tremblay",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
+    "eslint": "^4.9.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "mocha": "^5.1.0",
+    "prettier": "1.11.1",
+    "yuidocjs": "^0.10.2"
+  },
+  "main": "index.js"
+}
