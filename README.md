@@ -3,8 +3,7 @@
 - Stack
 - Queue
 - Tree
-- Binary Tree
-  - Binary Search Tree [DONE]
+- Binary Search Tree **[DONE]**
 - Trie
 - Graph
   - Adjacency list
