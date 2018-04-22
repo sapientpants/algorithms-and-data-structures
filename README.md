@@ -1,14 +1,14 @@
-- [] Linked list
-- [] Doubly linked list
-- [] Stack
-- [] Queue
-- [] Tree
-- [] Binary Tree
-- [] Binary Search Tree
-- [] Trie
-- [] Graph
+- Linked list
+- Doubly linked list
+- Stack
+- Queue
+- Tree
+- Binary Tree
+  - Binary Search Tree [DONE]
+- Trie
+- Graph
   - Adjacency list
-- [] Heap
-  - [] Binary heap
-- [] Vector / ArrayList
-- [] Hash table
+- Heap
+  - Binary heap
+- Vector / ArrayList
+- Hash table
