@@ -40,11 +40,13 @@ export default class BinarySearchTree {
   static _deleteMax(node) {
     if (node.right == null) return node.left;
     node.right = this._deleteMax(node.right);
+    return node;
   }
 
   static _deleteMin(node) {
     if (node.left == null) return node.right;
     node.left = this._deleteMin(node.left);
+    return node;
   }
 
   static _get(node, key) {
@@ -63,13 +65,13 @@ export default class BinarySearchTree {
   static _max(node) {
     if (node == null) return null;
     if (node.right == null) return node.key;
-    return this._max(node.right).key;
+    return this._max(node.right);
   }
 
   static _min(node) {
     if (node == null) return null;
     if (node.left == null) return node.key;
-    return this._min(node.left).key;
+    return this._min(node.left);
   }
 
   static _put(node, key, value) {
