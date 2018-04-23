@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Standard data structures implementations in Javascript.",
   "scripts": {
-    "doc": "./node_modules/.bin/yuidoc --outdir docs src",
+    "docs": "./node_modules/.bin/yuidoc",
     "test": "mocha --require babel-register"
   },
   "bugs": {

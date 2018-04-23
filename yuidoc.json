@@ -1,0 +1,11 @@
+{
+  "name": "Algorithms and Data Structures",
+  "description": "Algorithm and data structure implementations in Javascript",
+  "options": {
+    "extension": ".js",
+    "paths": [
+      "src"
+    ],
+    "outdir":   "docs"
+  }
+}
