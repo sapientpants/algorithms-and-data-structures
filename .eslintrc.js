@@ -2,10 +2,7 @@ module.exports = {
   root: true,
   extends: [
     "eslint:recommended",
-    "prettier",
-  ],
-  plugins: [
-    "prettier",
+    "plugin:prettier/recommended",
   ],
 
   rules: {

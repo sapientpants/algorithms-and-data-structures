@@ -1,4 +1,4 @@
-import { IndexOutOfBoundsError } from "./errors";
+import { IndexOutOfBoundsError } from './errors';
 
 class Node {
   constructor(data, next = null) {
@@ -119,7 +119,7 @@ export default class LinkedList {
       throw new IndexOutOfBoundsError(index);
     }
 
-    if (typeof validator == "function") {
+    if (typeof validator == 'function') {
       if (!validator(node)) {
         throw new IndexOutOfBoundsError(index);
       }

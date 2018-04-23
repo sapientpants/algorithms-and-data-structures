@@ -1,10 +1,9 @@
-import { IllegalArgumentException } from "./errors";
+import { IllegalArgumentException } from './errors';
 
 class Node {
   constructor(key, value) {
-    if (key == null) throw new IllegalArgumentException("key must not be null");
-    if (value == null)
-      throw new IllegalArgumentException("value must not be null");
+    if (key == null) throw new IllegalArgumentException('key must not be null');
+    if (value == null) throw new IllegalArgumentException('value must not be null');
     this.key = key;
     this.left = null;
     this.right = null;
@@ -50,7 +49,7 @@ export default class BinarySearchTree {
   }
 
   static _get(node, key) {
-    if (key == null) throw new IllegalArgumentException("key must not be null");
+    if (key == null) throw new IllegalArgumentException('key must not be null');
     if (node == null) return null;
     if (key < node.key) return this._get(node.left, key);
     if (key > node.key) return this._get(node.right, key);
@@ -83,9 +82,7 @@ export default class BinarySearchTree {
   }
 
   static _size(node) {
-    return node != null
-      ? 1 + this._size(node.left) + this._size(node.right)
-      : 0;
+    return node != null ? 1 + this._size(node.left) + this._size(node.right) : 0;
   }
 
   /**
@@ -144,7 +141,7 @@ export default class BinarySearchTree {
    * @param {Object} key
    */
   delete(key) {
-    if (key == null) throw new IllegalArgumentException("key must not be null");
+    if (key == null) throw new IllegalArgumentException('key must not be null');
     this.root = BinarySearchTree._delete(this.root, key);
   }
 
@@ -183,7 +180,7 @@ export default class BinarySearchTree {
    * @param {Object} value
    */
   put(key, value) {
-    if (key == null) throw new IllegalArgumentException("key must not be null");
+    if (key == null) throw new IllegalArgumentException('key must not be null');
     if (value == null) {
       this.delete(key);
       return;
