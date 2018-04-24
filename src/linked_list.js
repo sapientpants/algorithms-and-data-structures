@@ -29,7 +29,7 @@ export default class LinkedList {
   /**
    * Finds the first element in the receiver for which the predicate returns a true value.
    * @method findFirst
-   * @param {Function} predicate parameters are the current node and its index
+   * @param {Function} predicate parameters are the current element and its index
    * @return {Object} the first matching element or null.
    */
   findFirst(predicate) {
@@ -54,7 +54,7 @@ export default class LinkedList {
    * Returns a LinkedList containing all elements of the receiver for which the predicate
    * returns a true value.
    * @method findAll
-   * @param {Function} predicate parameters are the current node and its index
+   * @param {Function} predicate parameters are the current element and its index
    * @return {LinkedList} the matching nodes
    */
   findAll(predicate) {
