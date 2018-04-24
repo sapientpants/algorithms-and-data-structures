@@ -84,6 +84,24 @@ export default class BinarySearchTree {
   }
 
   /**
+   * Gets the value of the node with the given key.
+   * @method get
+   * @param {Object} key
+   * @return {Object} the value of the associated node or null if it does not exist in the receiver
+   */
+  get(key) {
+    return BinarySearchTree.getFromTree(this.root, key);
+  }
+
+  static getFromTree(root, key) {
+    if (key == null) throw new IllegalArgumentException('key must not be null');
+    if (root == null) return null;
+    if (key < root.key) return this.getFromTree(root.left, key);
+    if (key > root.key) return this.getFromTree(root.right, key);
+    return root.value;
+  }
+
+  /**
    * Removes the node with the given key from the receiver.
    * @method delete
    * @param {Object} key
@@ -108,6 +126,12 @@ export default class BinarySearchTree {
     return root;
   }
 
+  static deleteMinInTree(root) {
+    if (root.left == null) return root.right;
+    root.left = this.deleteMinInTree(root.left);
+    return root;
+  }
+
   /**
    * Removes the node with the minimum key from the receiver.
    * @method deleteMin
@@ -115,12 +139,6 @@ export default class BinarySearchTree {
   deleteMin() {
     if (this.isEmpty) return;
     this.root = BinarySearchTree.deleteMinInTree(this.root);
-  }
-
-  static deleteMinInTree(root) {
-    if (root.left == null) return root.right;
-    root.left = this.deleteMinInTree(root.left);
-    return root;
   }
 
   /**
@@ -136,24 +154,6 @@ export default class BinarySearchTree {
     if (root.right == null) return root.left;
     root.right = this.deleteMaxInTree(root.right);
     return root;
-  }
-
-  /**
-   * Gets the value of the node with the given key.
-   * @method get
-   * @param {Object} key
-   * @return {Object} the value of the associated node or null if it does not exist in the receiver
-   */
-  get(key) {
-    return BinarySearchTree.getFromTree(this.root, key);
-  }
-
-  static getFromTree(root, key) {
-    if (key == null) throw new IllegalArgumentException('key must not be null');
-    if (root == null) return null;
-    if (key < root.key) return this.getFromTree(root.left, key);
-    if (key > root.key) return this.getFromTree(root.right, key);
-    return root.value;
   }
 
   /**
