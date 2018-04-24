@@ -172,7 +172,7 @@ export default class BinarySearchTree {
   }
 
   static putInTree(root, key, value) {
-    if (root == null) return new Node(key, value);
+    if (root == null) return Node.forKeyAndValue(key, value);
     if (key < root.key) root.left = this.putInTree(root.left, key, value);
     else if (key > root.key) root.right = this.putInTree(root.right, key, value);
     else root.value = value;
@@ -188,5 +188,9 @@ class Node {
     this.left = null;
     this.right = null;
     this.value = value;
+  }
+
+  static forKeyAndValue(key, value) {
+    return new Node(key, value);
   }
 }
