@@ -1,18 +1,9 @@
 import { IllegalArgumentException } from './errors';
 
-class Node {
-  constructor(key, value) {
-    if (key == null) throw new IllegalArgumentException('key must not be null');
-    if (value == null) throw new IllegalArgumentException('value must not be null');
-    this.key = key;
-    this.left = null;
-    this.right = null;
-    this.value = value;
-  }
-}
-
 /**
- * An implementation of a binary search tree.
+ * An implementation of a binary search tree. This implementation does not try to
+ * rebalance the tree if it becomes unbalanced. In other words, the order that nodes
+ * are added matters.
  * @class BinarySearchTree
  * @constructor
  */
@@ -21,76 +12,17 @@ export default class BinarySearchTree {
     this.root = null;
   }
 
-  static _delete(node, key) {
-    if (node == null) return null;
-    if (key < node.key) node.left = this._delete(node.left, key);
-    else if (key > node.key) node.right = this._delete(node.right, key);
-    else {
-      if (node.right == null) return node.left;
-      if (node.left == null) return node.right;
-      const tmp = node;
-      node = this._min(tmp.right);
-      node.right = this._deleteMin(tmp.right);
-      node.left = tmp.left;
-    }
-    return node;
-  }
-
-  static _deleteMax(node) {
-    if (node.right == null) return node.left;
-    node.right = this._deleteMax(node.right);
-    return node;
-  }
-
-  static _deleteMin(node) {
-    if (node.left == null) return node.right;
-    node.left = this._deleteMin(node.left);
-    return node;
-  }
-
-  static _get(node, key) {
-    if (key == null) throw new IllegalArgumentException('key must not be null');
-    if (node == null) return null;
-    if (key < node.key) return this._get(node.left, key);
-    if (key > node.key) return this._get(node.right, key);
-    return node.value;
-  }
-
-  static _height(node) {
-    if (node == null) return 0;
-    return 1 + Math.max(this._height(node.left), this._height(node.right));
-  }
-
-  static _max(node) {
-    if (node == null) return null;
-    if (node.right == null) return node.key;
-    return this._max(node.right);
-  }
-
-  static _min(node) {
-    if (node == null) return null;
-    if (node.left == null) return node.key;
-    return this._min(node.left);
-  }
-
-  static _put(node, key, value) {
-    if (node == null) return new Node(key, value);
-    if (key < node.key) node.left = this._put(node.left, key, value);
-    else if (key > node.key) node.right = this._put(node.right, key, value);
-    else node.value = value;
-    return node;
-  }
-
-  static _size(node) {
-    return node != null ? 1 + this._size(node.left) + this._size(node.right) : 0;
-  }
-
   /**
    * The height of the receiver.
    * @property {Integer} height
    */
   get height() {
-    return BinarySearchTree._height(this.root);
+    return BinarySearchTree.heightOfTree(this.root);
+  }
+
+  static heightOfTree(root) {
+    if (root == null) return 0;
+    return 1 + Math.max(this.heightOfTree(root.left), this.heightOfTree(root.right));
   }
 
   /**
@@ -106,7 +38,13 @@ export default class BinarySearchTree {
    * @property {Object} max
    */
   get max() {
-    return BinarySearchTree._max(this.root);
+    return BinarySearchTree.maxKeyInTree(this.root);
+  }
+
+  static maxKeyInTree(root) {
+    if (root == null) return null;
+    if (root.right == null) return root.key;
+    return this.maxKeyInTree(root.right);
   }
 
   /**
@@ -114,7 +52,13 @@ export default class BinarySearchTree {
    * @property {Object} min
    */
   get min() {
-    return BinarySearchTree._min(this.root);
+    return BinarySearchTree.minKeyInTree(this.root);
+  }
+
+  static minKeyInTree(root) {
+    if (root == null) return null;
+    if (root.left == null) return root.key;
+    return this.minKeyInTree(root.left);
   }
 
   /**
@@ -122,7 +66,11 @@ export default class BinarySearchTree {
    * @property {Integer} size
    */
   get size() {
-    return BinarySearchTree._size(this.root);
+    return BinarySearchTree.sizeOfTree(this.root);
+  }
+
+  static sizeOfTree(root) {
+    return root != null ? 1 + this.sizeOfTree(root.left) + this.sizeOfTree(root.right) : 0;
   }
 
   /**
@@ -142,16 +90,22 @@ export default class BinarySearchTree {
    */
   delete(key) {
     if (key == null) throw new IllegalArgumentException('key must not be null');
-    this.root = BinarySearchTree._delete(this.root, key);
+    this.root = BinarySearchTree.deleteNodeFromTree(this.root, key);
   }
 
-  /**
-   * Removes the node with the maximum key from the receiver.
-   * @method deleteMax
-   */
-  deleteMax() {
-    if (this.isEmpty) return;
-    this.root = BinarySearchTree._deleteMax(this.root);
+  static deleteNodeFromTree(root, key) {
+    if (root == null) return null;
+    if (key < root.key) root.left = this.deleteNodeFromTree(root.left, key);
+    else if (key > root.key) root.right = this.deleteNodeFromTree(root.right, key);
+    else {
+      if (root.right == null) return root.left;
+      if (root.left == null) return root.right;
+      const tmp = root;
+      root = this.minKeyInTree(tmp.right);
+      root.right = this.deleteMinInTree(tmp.right);
+      root.left = tmp.left;
+    }
+    return root;
   }
 
   /**
@@ -160,7 +114,28 @@ export default class BinarySearchTree {
    */
   deleteMin() {
     if (this.isEmpty) return;
-    this.root = BinarySearchTree._deleteMin(this.root);
+    this.root = BinarySearchTree.deleteMinInTree(this.root);
+  }
+
+  static deleteMinInTree(root) {
+    if (root.left == null) return root.right;
+    root.left = this.deleteMinInTree(root.left);
+    return root;
+  }
+
+  /**
+   * Removes the node with the maximum key from the receiver.
+   * @method deleteMax
+   */
+  deleteMax() {
+    if (this.isEmpty) return;
+    this.root = BinarySearchTree.deleteMaxInTree(this.root);
+  }
+
+  static deleteMaxInTree(root) {
+    if (root.right == null) return root.left;
+    root.right = this.deleteMaxInTree(root.right);
+    return root;
   }
 
   /**
@@ -170,7 +145,15 @@ export default class BinarySearchTree {
    * @return {Object} the value of the associated node or null if it does not exist in the receiver
    */
   get(key) {
-    return BinarySearchTree._get(this.root, key);
+    return BinarySearchTree.getFromTree(this.root, key);
+  }
+
+  static getFromTree(root, key) {
+    if (key == null) throw new IllegalArgumentException('key must not be null');
+    if (root == null) return null;
+    if (key < root.key) return this.getFromTree(root.left, key);
+    if (key > root.key) return this.getFromTree(root.right, key);
+    return root.value;
   }
 
   /**
@@ -185,6 +168,25 @@ export default class BinarySearchTree {
       this.delete(key);
       return;
     }
-    this.root = BinarySearchTree._put(this.root, key, value);
+    this.root = BinarySearchTree.putInTree(this.root, key, value);
+  }
+
+  static putInTree(root, key, value) {
+    if (root == null) return new Node(key, value);
+    if (key < root.key) root.left = this.putInTree(root.left, key, value);
+    else if (key > root.key) root.right = this.putInTree(root.right, key, value);
+    else root.value = value;
+    return root;
+  }
+}
+
+class Node {
+  constructor(key, value) {
+    if (key == null) throw new IllegalArgumentException('key must not be null');
+    if (value == null) throw new IllegalArgumentException('value must not be null');
+    this.key = key;
+    this.left = null;
+    this.right = null;
+    this.value = value;
   }
 }
