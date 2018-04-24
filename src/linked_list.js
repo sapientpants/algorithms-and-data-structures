@@ -1,12 +1,5 @@
 import { IndexOutOfBoundsError } from './errors';
 
-class Node {
-  constructor(data, next = null) {
-    this.next = next;
-    this.data = data;
-  }
-}
-
 /**
  * An implementation of a linked list.
  * @class LinkedList
@@ -23,15 +16,57 @@ export default class LinkedList {
    * @param {Object} element The element to append.
    */
   append(element) {
-    const newNode = new Node(element);
-    if (this.head == null) {
-      this.head = newNode;
-    } else {
-      const node = this._findNode(node => {
-        return node.next == null;
+    const newNode = Node.forElement(element);
+    if (this.head == null) this.head = newNode;
+    else {
+      const lastNode = this.findFirstNode(n => {
+        return n.next == null;
       });
-      node.next = newNode;
+      lastNode.next = newNode;
     }
+  }
+
+  /**
+   * Finds the first element in the receiver for which the predicate returns a true value.
+   * @method findFirst
+   * @param {Function} predicate parameters are the current node and its index
+   * @return {Object} the first matching element or null.
+   */
+  findFirst(predicate) {
+    let node = this.findFirstNode((node, index) => {
+      return predicate(node.data, index);
+    });
+    return node != null ? node.data : null;
+  }
+
+  findFirstNode(predicate) {
+    let node = this.head;
+    let index = 0;
+    while (node != null) {
+      if (predicate(node, index)) return node;
+      node = node.next;
+      index += 1;
+    }
+    return null;
+  }
+
+  /**
+   * Returns a LinkedList containing all elements of the receiver for which the predicate
+   * returns a true value.
+   * @method findAll
+   * @param {Function} predicate parameters are the current node and its index
+   * @return {LinkedList} the matching nodes
+   */
+  findAll(predicate) {
+    const matchingNodes = new LinkedList();
+    let node = this.head;
+    let index = 0;
+    while (node != null) {
+      if (predicate(node.data, index)) matchingNodes.append(node.data);
+      node = node.next;
+      index += 1;
+    }
+    return matchingNodes;
   }
 
   /**
@@ -49,11 +84,10 @@ export default class LinkedList {
    * @return {Boolean} true if the given element was found, false otherwise
    */
   contains(element) {
-    if (this.head == null) {
-      return false;
-    } else {
-      const node = this._findNode(node => {
-        return node == null || node.data === element;
+    if (this.head == null) return false;
+    else {
+      const node = this.findFirst(e => {
+        return e === element;
       });
       return node != null;
     }
@@ -67,7 +101,17 @@ export default class LinkedList {
    * @return {Object} the element at the given index
    */
   get(index) {
-    const node = this._findNodeAt(index);
+    if (index < 0 || this.head == null) {
+      throw new IndexOutOfBoundsError(index);
+    }
+
+    const node = this.findFirstNode((n, i) => {
+      return index === i;
+    });
+
+    if (node == null) {
+      throw new IndexOutOfBoundsError(index);
+    }
     return node.data;
   }
 
@@ -87,44 +131,15 @@ export default class LinkedList {
     }
     return size;
   }
+}
 
-  _findNode(predicate) {
-    if (this.head == null) {
-      return null;
-    } else {
-      let node = this.head;
-      while (!predicate(node)) {
-        node = node.next;
-      }
-      return node;
-    }
+class Node {
+  constructor(data, next = null) {
+    this.next = next;
+    this.data = data;
   }
 
-  _findNodeAt(index, validator = null) {
-    if (index < 0 || this.head == null) {
-      throw new IndexOutOfBoundsError(index);
-    }
-
-    let node = this.head;
-    let i = index;
-    while (i > 0) {
-      if (node.next == null) {
-        throw new IndexOutOfBoundsError(index);
-      }
-      node = node.next;
-      i -= 1;
-    }
-
-    if (node == null) {
-      throw new IndexOutOfBoundsError(index);
-    }
-
-    if (typeof validator == 'function') {
-      if (!validator(node)) {
-        throw new IndexOutOfBoundsError(index);
-      }
-    }
-
-    return node;
+  static forElement(element) {
+    return new Node(element);
   }
 }

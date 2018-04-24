@@ -2,9 +2,14 @@ import { expect } from 'chai';
 import LinkedList from '../src/linked_list';
 
 describe('LinkedList', () => {
+  let linkedList;
+
+  beforeEach(() => {
+    linkedList = new LinkedList();
+  });
+
   describe('#append()', () => {
     it('should append an element to the list', () => {
-      const linkedList = new LinkedList();
       linkedList.append(1);
       expect(linkedList.size).to.equal(1);
       expect(linkedList.get(0)).to.equal(1);
@@ -13,7 +18,6 @@ describe('LinkedList', () => {
 
   describe('#clear()', () => {
     it('should remove all elements from the list', () => {
-      const linkedList = new LinkedList();
       linkedList.append(1);
       linkedList.clear();
       expect(linkedList.size).to.equal(0);
@@ -21,10 +25,7 @@ describe('LinkedList', () => {
   });
 
   describe('#contains()', () => {
-    let linkedList;
-
     beforeEach(() => {
-      linkedList = new LinkedList();
       linkedList.append(1);
     });
 
@@ -37,13 +38,48 @@ describe('LinkedList', () => {
     });
   });
 
-  describe('#get()', () => {
-    let linkedList;
-
-    beforeEach(() => {
-      linkedList = new LinkedList();
+  describe('#findAll()', () => {
+    it('should return an empty LinkedList with an empty receiver', () => {
+      expect(
+        linkedList.findAll(() => {
+          return true;
+        }).size
+      ).to.equal(0);
     });
 
+    it('should return the expected elements', () => {
+      linkedList.append(1);
+      linkedList.append(2);
+      linkedList.append(3);
+      const matchingNodes = linkedList.findAll(element => {
+        return element === 2;
+      });
+      expect(matchingNodes.size).to.equal(1);
+      expect(matchingNodes.get(0)).to.equal(2);
+    });
+  });
+
+  describe('#findFirst()', () => {
+    it('should return null with an empty receiver', () => {
+      expect(
+        linkedList.findFirst(() => {
+          return true;
+        })
+      ).to.be.null;
+    });
+
+    it('should return the expected element', () => {
+      linkedList.append(1);
+      linkedList.append(2);
+      linkedList.append(3);
+      const matchedElement = linkedList.findFirst(element => {
+        return element === 2;
+      });
+      expect(matchedElement).to.equal(2);
+    });
+  });
+
+  describe('#get()', () => {
     it('should raise an exception getting the first element of an empty list', () => {
       expect(() => linkedList.get(0)).to.throw(/index out of bounds/);
     });
@@ -77,12 +113,6 @@ describe('LinkedList', () => {
   });
 
   describe('#size', () => {
-    let linkedList;
-
-    beforeEach(() => {
-      linkedList = new LinkedList();
-    });
-
     it('should return 0 when the list is empty', () => {
       expect(linkedList.size).to.equal(0);
     });
