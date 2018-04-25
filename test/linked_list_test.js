@@ -104,13 +104,28 @@ describe('LinkedList', () => {
       expect(() => linkedList.insertAt(2, element)).to.throw(IndexOutOfBoundsError);
     });
 
-    it('should insert the element at the correct position in the list', () => {
-      linkedList.append(1);
-      linkedList.append(2);
-      linkedList.append(4);
-      linkedList.insertAt(2, 3);
-      expect(linkedList.size).to.equal(4);
-      expect(linkedList.get(2)).to.equal(3);
+    it('should insert the element at the correct position at the start of the list', () => {
+      linkedList.append('b');
+      linkedList.append('c');
+      linkedList.insertAt(0, 'a');
+      expect(linkedList.size).to.equal(3);
+      expect(linkedList.get(0)).to.equal('a');
+    });
+
+    it('should insert the element at the correct position in middle of the list', () => {
+      linkedList.append('a');
+      linkedList.append('c');
+      linkedList.insertAt(1, 'b');
+      expect(linkedList.size).to.equal(3);
+      expect(linkedList.get(1)).to.equal('b');
+    });
+
+    it('should insert the element at the correct position at the end of the list', () => {
+      linkedList.append('a');
+      linkedList.append('b');
+      linkedList.insertAt(2, 'c');
+      expect(linkedList.size).to.equal(3);
+      expect(linkedList.get(2)).to.equal('c');
     });
   });
 

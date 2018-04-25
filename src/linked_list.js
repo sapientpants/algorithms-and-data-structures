@@ -127,20 +127,17 @@ export default class LinkedList {
 
     const newNode = Node.forElement(element);
     if (index == 0) {
-      if (this.head == null) this.head = newNode;
-      else {
-        newNode.next = this.head;
-        this.head = newNode;
-      }
+      newNode.next = this.head;
+      this.head = newNode;
     } else {
-      const oldNode = this.findFirstNode((n, i) => {
+      const prevNode = this.findFirstNode((n, i) => {
         return i === index - 1;
       });
 
-      if (oldNode == null) throw new IndexOutOfBoundsError(index);
+      if (prevNode == null) throw new IndexOutOfBoundsError(index);
 
-      newNode.next = oldNode.next;
-      oldNode.next = newNode;
+      newNode.next = prevNode.next;
+      prevNode.next = newNode;
     }
   }
 
