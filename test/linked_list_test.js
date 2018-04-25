@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { IndexOutOfBoundsError } from '../src/errors';
 import LinkedList from '../src/linked_list';
 
 describe('LinkedList', () => {
@@ -81,12 +82,12 @@ describe('LinkedList', () => {
 
   describe('#get()', () => {
     it('should raise an exception getting the first element of an empty list', () => {
-      expect(() => linkedList.get(0)).to.throw(/index out of bounds/);
+      expect(() => linkedList.get(0)).to.throw(IndexOutOfBoundsError);
     });
 
     it('should raise an exception getting the n+1-element of an n-element list', () => {
       linkedList.append(1);
-      expect(() => linkedList.get(1)).to.throw(/index out of bounds/);
+      expect(() => linkedList.get(1)).to.throw(IndexOutOfBoundsError);
     });
 
     it('should get the n-th element of a list', () => {
@@ -98,13 +99,50 @@ describe('LinkedList', () => {
   });
 
   describe('#insertAt()', () => {
-    it('should raise an exception for a non-existant index');
-    it('should insert the element at the correct position in the list');
+    it('should raise an exception for a non-existant index', () => {
+      const element = 'element';
+      expect(() => linkedList.insertAt(2, element)).to.throw(IndexOutOfBoundsError);
+    });
+
+    it('should insert the element at the correct position in the list', () => {
+      linkedList.append(1);
+      linkedList.append(2);
+      linkedList.append(4);
+      linkedList.insertAt(2, 3);
+      expect(linkedList.size).to.equal(4);
+      expect(linkedList.get(2)).to.equal(3);
+    });
   });
 
   describe('#remove()', () => {
-    it('should return null for a non-existant value');
-    it('should return the value for an existant value and remove it from the list');
+    beforeEach(() => {
+      linkedList.append(1);
+      linkedList.append(2);
+      linkedList.append(3);
+    });
+
+    it('should return false for a non-existant value', () => {
+      expect(linkedList.remove(4)).to.be.false;
+      expect(linkedList.size).to.equal(3);
+    });
+
+    it('should return true for the first value and remove it from the list', () => {
+      expect(linkedList.remove(1)).to.be.true;
+      expect(linkedList.size).to.equal(2);
+      expect(linkedList.findFirst(e => e === 1)).to.be.null;
+    });
+
+    it('should return true for the middle value and remove it from the list', () => {
+      expect(linkedList.remove(2)).to.be.true;
+      expect(linkedList.size).to.equal(2);
+      expect(linkedList.findFirst(e => e === 2)).to.be.null;
+    });
+
+    it('should return true for the last value and remove it from the list', () => {
+      expect(linkedList.remove(3)).to.be.true;
+      expect(linkedList.size).to.equal(2);
+      expect(linkedList.findFirst(e => e === 3)).to.be.null;
+    });
   });
 
   describe('#removeAt()', () => {

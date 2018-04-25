@@ -97,7 +97,7 @@ export default class LinkedList {
    * Gets the object at the given index.
    * @method get
    * @param {Integer} index
-   * @throws {Error} if the index is < 0 or > size - 1
+   * @throws {IndexOutOfBoundsError} if the index is out of bounds
    * @return {Object} the element at the given index
    */
   get(index) {
@@ -113,6 +113,59 @@ export default class LinkedList {
       throw new IndexOutOfBoundsError(index);
     }
     return node.data;
+  }
+
+  /**
+   * Inserts the given element at the specified position in this list.
+   * @method insertAt
+   * @param {Integer} index
+   * @param {Object} element
+   * @throws {IndexOutOfBoundsError} if the index is out of bounds
+   */
+  insertAt(index, element) {
+    if (index < 0) throw new IndexOutOfBoundsError(index);
+
+    const newNode = Node.forElement(element);
+    if (index == 0) {
+      if (this.head == null) this.head = newNode;
+      else {
+        newNode.next = this.head;
+        this.head = newNode;
+      }
+    } else {
+      const oldNode = this.findFirstNode((n, i) => {
+        return i === index - 1;
+      });
+
+      if (oldNode == null) throw new IndexOutOfBoundsError(index);
+
+      newNode.next = oldNode.next;
+      oldNode.next = newNode;
+    }
+  }
+
+  /**
+   * Removes the first occurrence of the given element from the receiver, if it is present.
+   * @method remove
+   * @param {Object} element
+   * @return {Boolean} true if the element was found and removed, false otherwise
+   */
+  remove(element) {
+    if (this.head.data === element) {
+      this.head = this.head.next;
+      return true;
+    }
+
+    const prevNode = this.findFirstNode(n => {
+      return n.next != null && n.next.data === element;
+    });
+
+    if (prevNode != null) {
+      prevNode.next = prevNode.next.next;
+      return true;
+    }
+
+    return false;
   }
 
   /**
