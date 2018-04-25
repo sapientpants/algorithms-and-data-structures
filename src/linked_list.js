@@ -10,6 +10,22 @@ export default class LinkedList {
     this.head = null;
   }
 
+  [Symbol.iterator]() {
+    let node = this.head;
+
+    return {
+      next: () => {
+        if (node != null) {
+          const value = node.data;
+          node = node.next;
+          return { value: value, done: false };
+        } else {
+          return { done: true };
+        }
+      },
+    };
+  }
+
   /**
    * Append an element to the end of the receiver.
    * @method append

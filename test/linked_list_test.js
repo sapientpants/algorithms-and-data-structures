@@ -129,6 +129,27 @@ describe('LinkedList', () => {
     });
   });
 
+  describe('Iterable', () => {
+    it('iterates over an empty list', () => {
+      const elements = [];
+      for (let element of linkedList) {
+        elements.push(element);
+      }
+      expect(elements.length).to.equal(0);
+    });
+
+    it('iterates over the elements in order', () => {
+      linkedList.append('a');
+      linkedList.append('b');
+      linkedList.append('c');
+      const elements = [];
+      for (let element of linkedList) {
+        elements.push(element);
+      }
+      expect(elements).to.deep.equal(['a', 'b', 'c']);
+    });
+  });
+
   describe('#remove()', () => {
     beforeEach(() => {
       linkedList.append('a');
