@@ -1,4 +1,4 @@
-- Linked list
+- Linked list **[DONE]**
 - Doubly linked list
 - Stack
 - Queue

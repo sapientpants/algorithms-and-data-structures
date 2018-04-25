@@ -131,38 +131,62 @@ describe('LinkedList', () => {
 
   describe('#remove()', () => {
     beforeEach(() => {
-      linkedList.append(1);
-      linkedList.append(2);
-      linkedList.append(3);
+      linkedList.append('a');
+      linkedList.append('b');
+      linkedList.append('c');
     });
 
     it('should return false for a non-existant value', () => {
-      expect(linkedList.remove(4)).to.be.false;
       expect(linkedList.size).to.equal(3);
     });
 
-    it('should return true for the first value and remove it from the list', () => {
-      expect(linkedList.remove(1)).to.be.true;
+    it('should remove the first value from the list', () => {
+      linkedList.remove('a');
       expect(linkedList.size).to.equal(2);
-      expect(linkedList.findFirst(e => e === 1)).to.be.null;
+      expect(linkedList.findFirst(e => e === 'a')).to.be.null;
     });
 
-    it('should return true for the middle value and remove it from the list', () => {
-      expect(linkedList.remove(2)).to.be.true;
+    it('should remove a value from the middle of the list', () => {
+      linkedList.remove('b');
       expect(linkedList.size).to.equal(2);
-      expect(linkedList.findFirst(e => e === 2)).to.be.null;
+      expect(linkedList.findFirst(e => e === 'b')).to.be.null;
     });
 
-    it('should return true for the last value and remove it from the list', () => {
-      expect(linkedList.remove(3)).to.be.true;
+    it('should remove a value from the end of the list', () => {
+      linkedList.remove('c');
       expect(linkedList.size).to.equal(2);
-      expect(linkedList.findFirst(e => e === 3)).to.be.null;
+      expect(linkedList.findFirst(e => e === 'c')).to.be.null;
     });
   });
 
   describe('#removeAt()', () => {
-    it('should raise an exception for a non-existant index');
-    it('should remove the specified element');
+    beforeEach(() => {
+      linkedList.append('a');
+      linkedList.append('b');
+      linkedList.append('c');
+    });
+
+    it('should raise an exception for a non-existant index', () => {
+      expect(() => linkedList.removeAt(4)).to.throw(IndexOutOfBoundsError);
+    });
+
+    it('should remove the first element', () => {
+      linkedList.removeAt(0);
+      expect(linkedList.size).to.equal(2);
+      expect(linkedList.findFirst(e => e === 'a')).to.be.null;
+    });
+
+    it('should remove an element in the middle', () => {
+      linkedList.removeAt(1);
+      expect(linkedList.size).to.equal(2);
+      expect(linkedList.findFirst(e => e === 'b')).to.be.null;
+    });
+
+    it('should remove the last element', () => {
+      linkedList.removeAt(2);
+      expect(linkedList.size).to.equal(2);
+      expect(linkedList.findFirst(e => e === 'c')).to.be.null;
+    });
   });
 
   describe('#size', () => {

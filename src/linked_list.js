@@ -144,13 +144,12 @@ export default class LinkedList {
   /**
    * Removes the first occurrence of the given element from the receiver, if it is present.
    * @method remove
-   * @param {Object} element
-   * @return {Boolean} true if the element was found and removed, false otherwise
+   * @param {Object} element the element to remove
    */
   remove(element) {
     if (this.head.data === element) {
       this.head = this.head.next;
-      return true;
+      return;
     }
 
     const prevNode = this.findFirstNode(n => {
@@ -159,10 +158,35 @@ export default class LinkedList {
 
     if (prevNode != null) {
       prevNode.next = prevNode.next.next;
-      return true;
+      return;
     }
 
-    return false;
+    return;
+  }
+
+  /**
+   * Removes the element at the given index and returns it.
+   * @method removeAt
+   * @param {Integer} index the index of the element to remove
+   * @throws {IndexOutOfBoundsError} if the index is out of bounds
+   */
+  removeAt(index) {
+    if (index < 0) throw new IndexOutOfBoundsError(index);
+
+    if (index === 0) {
+      this.head = this.head.next;
+      return;
+    }
+
+    const prevNode = this.findFirstNode((n, i) => {
+      return n.next != null && i === index - 1;
+    });
+
+    if (prevNode == null) throw new IndexOutOfBoundsError(index);
+
+    prevNode.next = prevNode.next.next;
+
+    return;
   }
 
   /**
