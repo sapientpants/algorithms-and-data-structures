@@ -4,6 +4,7 @@
   "description": "Standard data structures implementations in Javascript.",
   "scripts": {
     "docs": "./node_modules/.bin/yuidoc",
+    "format": "prettier --write \"{src,test}/**/*\\.js\"",
     "test": "mocha --require babel-register"
   },
   "bugs": {
