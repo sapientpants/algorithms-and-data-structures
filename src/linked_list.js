@@ -18,7 +18,7 @@ export default class LinkedList {
         if (node != null) {
           const value = node.data;
           node = node.next;
-          return { value: value, done: false };
+          return { value: value };
         } else {
           return { done: true };
         }
