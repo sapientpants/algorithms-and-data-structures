@@ -1,17 +1,17 @@
 # Algorithms and Data Structures
 
-- [x] Binary Search Tree
+- [x] Binary search tree
 - [x] Linked list
 - [ ] Doubly linked list
 - [ ] Stack
 - [ ] Queue
 - [ ] Tree
-- [ ] Red-black Tree
-- [ ] AVL Tree
+- [ ] Red-black tree
+- [ ] AVL tree
 - [ ] Trie
 - [ ] Graph
-- [ ] Adjacency List
+- [ ] Adjacency list
 - [ ] Heap
-- [ ] Binary Heap
+- [ ] Binary heap
 - [ ] Vector / ArrayList
 - [ ] Hash table
