@@ -1,9 +1,16 @@
+# Algorithms and Data Structures
+
+## Implemented
+
+- Binary Search Tree **[DONE]**
 - Linked list **[DONE]**
+
+## Todo
+
 - Doubly linked list
 - Stack
 - Queue
 - Tree
-- Binary Search Tree **[DONE]**
 - Red-black Tree
 - AVL Tree
 - Trie
