@@ -194,4 +194,100 @@ describe('BinarySearchTree', () => {
       expect(binarySearchTree.size).to.equal(3);
     });
   });
+
+  describe('#sorted', () => {
+    it('should return an empty array for an empty tree', () => {
+      expect(binarySearchTree.sorted).to.deep.equal([]);
+    });
+
+    it('should return the expected ordered values for a left leaning tree', () => {
+      binarySearchTree.put(1, 'a');
+      binarySearchTree.put(2, 'b');
+      binarySearchTree.put(3, 'c');
+      binarySearchTree.put(4, 'd');
+      binarySearchTree.put(5, 'e');
+      binarySearchTree.put(6, 'f');
+      binarySearchTree.put(7, 'g');
+      expect(binarySearchTree.sorted).to.deep.equal([
+        [1, 'a'],
+        [2, 'b'],
+        [3, 'c'],
+        [4, 'd'],
+        [5, 'e'],
+        [6, 'f'],
+        [7, 'g'],
+      ]);
+    });
+
+    it('should return the expected ordered values for a right leaning tree', () => {
+      binarySearchTree.put(7, 'g');
+      binarySearchTree.put(6, 'f');
+      binarySearchTree.put(5, 'e');
+      binarySearchTree.put(4, 'd');
+      binarySearchTree.put(3, 'c');
+      binarySearchTree.put(2, 'b');
+      binarySearchTree.put(1, 'a');
+      expect(binarySearchTree.sorted).to.deep.equal([
+        [1, 'a'],
+        [2, 'b'],
+        [3, 'c'],
+        [4, 'd'],
+        [5, 'e'],
+        [6, 'f'],
+        [7, 'g'],
+      ]);
+    });
+
+    it('should return the expected ordered values for a balanced tree', () => {
+      binarySearchTree.put(4, 'd');
+      binarySearchTree.put(2, 'b');
+      binarySearchTree.put(1, 'a');
+      binarySearchTree.put(3, 'c');
+      binarySearchTree.put(6, 'f');
+      binarySearchTree.put(5, 'e');
+      binarySearchTree.put(7, 'g');
+      expect(binarySearchTree.sorted).to.deep.equal([
+        [1, 'a'],
+        [2, 'b'],
+        [3, 'c'],
+        [4, 'd'],
+        [5, 'e'],
+        [6, 'f'],
+        [7, 'g'],
+      ]);
+    });
+  });
+
+  describe('Iterable', () => {
+    it('iterates over an empty list', () => {
+      const elements = [];
+      for (let element of binarySearchTree) {
+        elements.push(element);
+      }
+      expect(elements).to.deep.equal([]);
+    });
+
+    it('iterates over the elements in order', () => {
+      binarySearchTree.put(4, 'd');
+      binarySearchTree.put(2, 'b');
+      binarySearchTree.put(1, 'a');
+      binarySearchTree.put(3, 'c');
+      binarySearchTree.put(6, 'f');
+      binarySearchTree.put(5, 'e');
+      binarySearchTree.put(7, 'g');
+      const elements = [];
+      for (let element of binarySearchTree) {
+        elements.push(element);
+      }
+      expect(elements).to.deep.equal([
+        [1, 'a'],
+        [2, 'b'],
+        [3, 'c'],
+        [4, 'd'],
+        [5, 'e'],
+        [6, 'f'],
+        [7, 'g'],
+      ]);
+    });
+  });
 });

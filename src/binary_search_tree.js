@@ -12,6 +12,39 @@ export default class BinarySearchTree {
     this.root = null;
   }
 
+  [Symbol.iterator]() {
+    let i = 0;
+    let keysAndValues = this.sorted;
+
+    return {
+      next: () => {
+        if (i < keysAndValues.length) {
+          const keyAndValue = keysAndValues[i++];
+          return { value: keyAndValue };
+        } else return { done: true };
+      },
+    };
+  }
+
+  /**
+   * Returns key-value pairs of the tree in ascending order of the keys.
+   * @property {Array} key-value pairs of the tree
+   */
+  get sorted() {
+    const nodes = BinarySearchTree.sortedNodesFromTree(this.root);
+    return nodes.map(node => [node.key, node.value]);
+  }
+
+  static sortedNodesFromTree(root) {
+    var nodes = [];
+    if (root != null) {
+      nodes = nodes.concat(this.sortedNodesFromTree(root.left));
+      nodes.push(root);
+      nodes = nodes.concat(this.sortedNodesFromTree(root.right));
+    }
+    return nodes;
+  }
+
   /**
    * The height of the receiver.
    * @property {Integer} height
