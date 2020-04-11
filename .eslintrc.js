@@ -39,6 +39,13 @@ module.exports = {
         "semi": "error",
         "no-unused-vars": "error",
         "comma-dangle": "off",
+        "max-len": [
+          "error",
+          {
+            "code": 80 ,
+            "tabWidth": 2
+          }
+        ]
       },
     },
     {
