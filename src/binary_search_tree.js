@@ -1,9 +1,9 @@
 import { IllegalArgumentException } from './errors';
 
 /**
- * An implementation of a binary search tree. This implementation does not try to
- * rebalance the tree if it becomes unbalanced. In other words, the order that nodes
- * are added matters.
+ * An implementation of a binary search tree. This implementation does not try
+ * to rebalance the tree if it becomes unbalanced. In other words, the order
+ * that nodes are added matters.
  * @class BinarySearchTree
  * @constructor
  */
@@ -55,7 +55,8 @@ export default class BinarySearchTree {
 
   static heightOfTree(root) {
     if (root == null) return 0;
-    return 1 + Math.max(this.heightOfTree(root.left), this.heightOfTree(root.right));
+    return 1 + Math.max(this.heightOfTree(root.left),
+                        this.heightOfTree(root.right));
   }
 
   /**
