@@ -1,4 +1,6 @@
-import { IllegalArgumentException } from './errors';
+import {
+  IllegalArgumentException
+} from './errors';
 
 /**
  * An implementation of a binary search tree. This implementation does not try
@@ -20,8 +22,12 @@ export default class BinarySearchTree {
       next: () => {
         if (i < keysAndValues.length) {
           const keyAndValue = keysAndValues[i++];
-          return { value: keyAndValue };
-        } else return { done: true };
+          return {
+            value: keyAndValue
+          };
+        } else return {
+          done: true
+        };
       },
     };
   }
@@ -56,7 +62,7 @@ export default class BinarySearchTree {
   static heightOfTree(root) {
     if (root == null) return 0;
     return 1 + Math.max(this.heightOfTree(root.left),
-                        this.heightOfTree(root.right));
+      this.heightOfTree(root.right));
   }
 
   /**
