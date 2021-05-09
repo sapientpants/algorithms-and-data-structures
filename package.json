@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Standard data structures implementations in Javascript.",
   "scripts": {
-    "docs": "./node_modules/.bin/yuidoc",
     "format": "prettier --write \"{src,test}/**/*\\.js\"",
     "test": "mocha --require babel-register"
   },
@@ -24,8 +23,7 @@
     "lodash": ">=4.17.13",
     "mocha": "^5.1.0",
     "prettier": "1.11.1",
-    "randomatic": ">=3.0.0",
-    "yuidocjs": "^0.10.2"
+    "randomatic": ">=3.0.0"
   },
   "main": "index.js"
 }
