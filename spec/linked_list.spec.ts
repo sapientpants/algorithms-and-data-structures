@@ -39,6 +39,26 @@ describe('LinkedList', () => {
     });
   });
 
+  describe('get()', () => {});
+
+  describe('head()', () => {
+    it('returns null for an empty linked list', () => {
+      const linkedList = new LinkedList<string>();
+      expect(linkedList.head()).toBeNull();
+    });
+
+    it('returns the first element of a non-null linked list', () => {
+      const firstValue = 'one';
+      const linkedList = new LinkedList<string>()
+        .add(firstValue)
+        .add('two')
+        .add('three');
+      expect(linkedList.head()).toBe(firstValue);
+    });
+  });
+
+  describe('insert()', () => {});
+
   describe('size()', () => {
     it('returns 0 for an empty linked list', () => {
       const linkedList = new LinkedList<string>();
@@ -58,6 +78,8 @@ describe('LinkedList', () => {
       expect(linkedList.size()).toBe(3);
     });
   });
+
+  describe('slice()', () => {});
 
   describe('tail()', () => {
     it('returns an empty list for an empty list', () => {
