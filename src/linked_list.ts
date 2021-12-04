@@ -131,17 +131,6 @@ class LinkedList<E> implements List<E> {
 
     return elements;
   }
-
-  private lastNode(): LinkedListNode<E> | null {
-    if (this.root) {
-      let node = null;
-      for (let n of this) {
-        node = n;
-      }
-      return node;
-    }
-    return null;
-  }
 }
 
 export default LinkedList;
