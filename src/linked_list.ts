@@ -1,6 +1,6 @@
 import List from './list';
 import Node from './node';
-import { NotImplementedError } from './error';
+import { NotImplementedError } from './errors';
 
 interface LinkedListNode<E> extends Node<E> {
   next: LinkedListNode<E> | null;
