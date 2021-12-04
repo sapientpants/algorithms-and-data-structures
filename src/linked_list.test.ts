@@ -22,5 +22,12 @@ describe('LinkedList', () => {
       linkedList.add(value);
       expect(linkedList.root?.value).toBe(value);
     });
+
+    test('adding a new node when root is not null', () => {
+      const linkedList = new LinkedList<string>('blah');
+      const value = 'value';
+      linkedList.add(value);
+      expect(linkedList.root?.next?.value).toBe(value);
+    });
   });
 });
