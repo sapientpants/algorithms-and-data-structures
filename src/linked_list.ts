@@ -43,7 +43,7 @@ class LinkedList<E> implements List<E> {
   }
 
   empty(): boolean {
-    return this.size() === 0;
+    return this.root == null;
   }
 
   get(index: number): E {

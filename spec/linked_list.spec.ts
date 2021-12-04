@@ -27,6 +27,18 @@ describe('LinkedList', () => {
     });
   });
 
+  describe('empty()', () => {
+    it('returns true for an empty linked list', () => {
+      const linkedList = new LinkedList<string>();
+      expect(linkedList.empty()).toBeTruthy();
+    });
+
+    it('returns false for a non-empty linked list', () => {
+      const linkedList = new LinkedList<string>().add('one');
+      expect(linkedList.empty()).toBeFalsy();
+    });
+  });
+
   describe('size()', () => {
     it('returns 0 for an empty linked list', () => {
       const linkedList = new LinkedList<string>();
@@ -34,8 +46,16 @@ describe('LinkedList', () => {
     });
 
     it('returns 1 for a linked list with 1 element', () => {
-      const linkedList = new LinkedList<string>().add('value');
+      const linkedList = new LinkedList<string>().add('one');
       expect(linkedList.size()).toBe(1);
+    });
+
+    it('returns 3 for a linked list with 3 elements', () => {
+      const linkedList = new LinkedList<string>()
+        .add('one')
+        .add('two')
+        .add('three');
+      expect(linkedList.size()).toBe(3);
     });
   });
 
