@@ -4,7 +4,7 @@
   "description": "Standard data structures implementations in Javascript.",
   "scripts": {
     "build": "npx tsc --build",
-    "clean": "npx tsc --build --clean",
+    "clean": "rm -rf ./dist",
     "test": "npx jest",
     "watch": "npx tsc --watch"
   },
