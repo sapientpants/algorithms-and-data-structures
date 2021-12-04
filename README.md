@@ -1,7 +1,7 @@
 # Algorithms and Data Structures
 
-- [x] Binary search tree
-- [x] Linked list
+- [ ] Binary search tree
+- [ ] Linked list
 - [ ] Doubly linked list
 - [ ] Stack
 - [ ] Queue
