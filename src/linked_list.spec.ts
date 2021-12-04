@@ -1,11 +1,6 @@
 import LinkedList from './linked_list';
 
 describe('LinkedList', () => {
-  it('can be constructed', () => {
-    const linkedList = new LinkedList<string>();
-    expect(linkedList.root).toBeNull();
-  });
-
   it('it is iterable', () => {
     const linkedList = new LinkedList<string>();
     expect(linkedList[Symbol.iterator]).not.toBeNull();
@@ -16,15 +11,17 @@ describe('LinkedList', () => {
       const linkedList = new LinkedList<string>();
       const value = 'value';
       linkedList.add(value);
-      expect(linkedList.root?.value).toBe(value);
+      expect(linkedList.head()).toBe(value);
     });
 
     it('adding a new node when root is not null', () => {
       const linkedList = new LinkedList<string>();
-      linkedList.add('blah');
-      const value = 'value';
-      linkedList.add(value);
-      expect(linkedList.root?.next?.value).toBe(value);
+      const firstValue = 'blah';
+      const secondValue = 'value';
+      linkedList.add(firstValue);
+      linkedList.add(secondValue);
+      expect(linkedList.head()).toBe(firstValue);
+      expect(linkedList.get(BigInt(1))).toBe(secondValue);
     });
   });
 

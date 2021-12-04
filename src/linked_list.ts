@@ -1,13 +1,13 @@
 import List from './list';
 import Node from './node';
-import { NotImplementedError } from './errors';
+import { IndexOutOfBoundsException, NotImplementedError } from './errors';
 
 interface LinkedListNode<E> extends Node<E> {
   next: LinkedListNode<E> | null;
 }
 
 class LinkedList<E> implements List<E> {
-  root: LinkedListNode<E> | null;
+  private root: LinkedListNode<E> | null;
 
   constructor() {
     this.root = null;
@@ -41,16 +41,38 @@ class LinkedList<E> implements List<E> {
     return this.size() !== BigInt(0);
   }
 
-  get(index: BigInt): E {
-    throw new NotImplementedError();
+  get(index: bigint): E {
+    return this.getNode(index).value;
+  }
+
+  private getNode(index: bigint): LinkedListNode<E> {
+    if (index < BigInt(0) || index >= this.size()) {
+      throw new IndexOutOfBoundsException();
+    }
+    let i = index;
+    let node = this.root as LinkedListNode<E>;
+    while (i > 0) {
+      node = node.next as LinkedListNode<E>;
+      i -= BigInt(1);
+    }
+    return node;
   }
 
   head(): E | null {
-    throw new NotImplementedError();
+    return this.root ? this.root.value : null;
   }
 
-  insert(index: BigInt, e: E) {
-    throw new NotImplementedError();
+  insert(index: bigint, e: E) {
+    if (index === BigInt(0)) {
+    } else {
+      const nodeBefore = this.getNode(index - BigInt(1));
+      const nodeAfter = nodeBefore.next;
+      const newNode: LinkedListNode<E> = {
+        next: nodeAfter,
+        value: e,
+      };
+      nodeBefore.next = newNode;
+    }
   }
 
   size(): bigint {
