@@ -13,6 +13,14 @@ class LinkedList<E> implements List<E> {
     this.root = null;
   }
 
+  *[Symbol.iterator]() {
+    let node = this.root;
+    while (node) {
+      yield node;
+      node = node.next;
+    }
+  }
+
   add(e: E): boolean {
     const newNode = {
       next: null,
@@ -46,7 +54,11 @@ class LinkedList<E> implements List<E> {
   }
 
   size(): bigint {
-    throw new NotImplementedError();
+    let s: bigint = BigInt(0);
+    for (let n of this) {
+      s += BigInt(1);
+    }
+    return s;
   }
 
   tail(): List<E> {
@@ -55,9 +67,9 @@ class LinkedList<E> implements List<E> {
 
   private lastNode(): LinkedListNode<E> | null {
     if (this.root) {
-      let node = this.root;
-      while (node.next) {
-        node = node.next;
+      let node = null;
+      for (let n of this) {
+        node = n;
       }
       return node;
     }
