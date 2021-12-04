@@ -8,33 +8,60 @@ describe('LinkedList', () => {
 
   describe('add()', () => {
     it('adding a new node when root is null', () => {
-      const linkedList = new LinkedList<string>();
       const value = 'value';
-      linkedList.add(value);
+      const linkedList = new LinkedList<string>().add(value);
       expect(linkedList.head()).toBe(value);
     });
 
     it('adding a new node when root is not null', () => {
-      const linkedList = new LinkedList<string>();
-      const firstValue = 'blah';
-      const secondValue = 'value';
-      linkedList.add(firstValue);
-      linkedList.add(secondValue);
+      const firstValue = 'one';
+      const secondValue = 'two';
+      const thirdValue = 'three';
+      const linkedList = new LinkedList<string>()
+        .add(firstValue)
+        .add(secondValue)
+        .add(thirdValue);
       expect(linkedList.head()).toBe(firstValue);
-      expect(linkedList.get(BigInt(1))).toBe(secondValue);
+      expect(linkedList.get(1)).toBe(secondValue);
+      expect(linkedList.get(2)).toBe(thirdValue);
     });
   });
 
   describe('size()', () => {
     it('returns 0 for an empty linked list', () => {
       const linkedList = new LinkedList<string>();
-      expect(linkedList.size()).toBe(BigInt(0));
+      expect(linkedList.size()).toBe(0);
     });
 
     it('returns 1 for a linked list with 1 element', () => {
+      const linkedList = new LinkedList<string>().add('value');
+      expect(linkedList.size()).toBe(1);
+    });
+  });
+
+  describe('tail()', () => {
+    it('returns an empty list for an empty list', () => {
       const linkedList = new LinkedList<string>();
-      linkedList.add('value');
-      expect(linkedList.size()).toBe(BigInt(1));
+      expect(linkedList.tail().empty()).toBeTruthy();
+    });
+
+    it('returns an empty list with 1 element', () => {
+      const linkedList = new LinkedList<string>().add('one');
+      expect(linkedList.tail().empty()).toBeTruthy();
+    });
+
+    it('returns the tail of a list with more than 1 element', () => {
+      const firstValue = 'one';
+      const secondValue = 'two';
+      const thirdValue = 'three';
+      const linkedList = new LinkedList<string>()
+        .add(firstValue)
+        .add(secondValue)
+        .add(thirdValue)
+        .tail();
+
+      expect(linkedList.head()).toBe(secondValue);
+      expect(linkedList.get(1)).toBe(thirdValue);
     });
   });
 });

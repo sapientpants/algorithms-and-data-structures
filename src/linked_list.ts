@@ -3,7 +3,7 @@ import Node from './node';
 import { IndexOutOfBoundsException, NotImplementedError } from './errors';
 
 interface LinkedListNode<E> extends Node<E> {
-  next: LinkedListNode<E> | null;
+  readonly next: LinkedListNode<E> | null;
 }
 
 class LinkedList<E> implements List<E> {
@@ -21,39 +21,44 @@ class LinkedList<E> implements List<E> {
     }
   }
 
-  add(e: E): boolean {
-    const newNode = {
+  add(e: E): LinkedList<E> {
+    let node: LinkedListNode<E> = {
       next: null,
       value: e,
     };
+    const values = this.toArray();
+    let i = values.length - 1;
 
-    const node = this.lastNode();
-    if (node) {
-      node.next = newNode;
-    } else {
-      this.root = newNode;
+    while (i >= 0) {
+      node = {
+        next: node,
+        value: values[i],
+      };
+      i--;
     }
 
-    return true;
+    const newLinkedList = new LinkedList<E>();
+    newLinkedList.root = node;
+    return newLinkedList;
   }
 
   empty(): boolean {
-    return this.size() !== BigInt(0);
+    return this.size() === 0;
   }
 
-  get(index: bigint): E {
+  get(index: number): E {
     return this.getNode(index).value;
   }
 
-  private getNode(index: bigint): LinkedListNode<E> {
-    if (index < BigInt(0) || index >= this.size()) {
+  private getNode(index: number): LinkedListNode<E> {
+    if (index < 0 || index >= this.size()) {
       throw new IndexOutOfBoundsException();
     }
     let i = index;
     let node = this.root as LinkedListNode<E>;
     while (i > 0) {
       node = node.next as LinkedListNode<E>;
-      i -= BigInt(1);
+      i--;
     }
     return node;
   }
@@ -62,29 +67,69 @@ class LinkedList<E> implements List<E> {
     return this.root ? this.root.value : null;
   }
 
-  insert(index: bigint, e: E) {
-    if (index === BigInt(0)) {
-    } else {
-      const nodeBefore = this.getNode(index - BigInt(1));
-      const nodeAfter = nodeBefore.next;
-      const newNode: LinkedListNode<E> = {
-        next: nodeAfter,
-        value: e,
-      };
-      nodeBefore.next = newNode;
-    }
+  insert(index: number, e: E): LinkedList<E> {
+    throw new NotImplementedError();
+    // if (index === 0) {
+    // } else {
+    //   const nodeBefore = this.getNode(index - 1);
+    //   const nodeAfter = nodeBefore.next;
+    //   const newNode: LinkedListNode<E> = {
+    //     next: nodeAfter,
+    //     value: e,
+    //   };
+    //   nodeBefore.next = newNode;
+    // }
   }
 
-  size(): bigint {
-    let s: bigint = BigInt(0);
+  size(): number {
+    let s: number = 0;
     for (let n of this) {
-      s += BigInt(1);
+      s++;
     }
     return s;
   }
 
-  tail(): List<E> {
-    throw new NotImplementedError();
+  slice(start: number, end: number): LinkedList<E> {
+    if (start < 0 || start >= this.size()) {
+      throw new IndexOutOfBoundsException();
+    }
+    if (end < start || end > this.size()) {
+      throw new IndexOutOfBoundsException();
+    }
+
+    const values = this.toArray();
+    let i = end - 1;
+
+    let node: LinkedListNode<E> = {
+      next: null,
+      value: values[i],
+    };
+
+    while (i >= start) {
+      node = {
+        next: node,
+        value: values[i],
+      };
+      i--;
+    }
+
+    const newLinkedList = new LinkedList<E>();
+    newLinkedList.root = node;
+    return newLinkedList;
+  }
+
+  tail(): LinkedList<E> {
+    return this.size() <= 1 ? new LinkedList<E>() : this.slice(1, this.size());
+  }
+
+  toArray(): Array<E> {
+    const elements: Array<E> = [];
+
+    for (let n of this) {
+      elements.push(n.value);
+    }
+
+    return elements;
   }
 
   private lastNode(): LinkedListNode<E> | null {

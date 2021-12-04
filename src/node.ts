@@ -1,5 +1,5 @@
 interface Node<T> {
-  value: T;
+  readonly value: T;
 }
 
 export default Node;

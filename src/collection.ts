@@ -1,7 +1,7 @@
 interface Collection<E> {
-  add: (e: E) => boolean;
+  add: (e: E) => Collection<E>;
   empty: () => boolean;
-  size: () => bigint;
+  size: () => number;
 }
 
 export default Collection;

@@ -1,9 +1,10 @@
 import Collection from './collection';
 
 interface List<E> extends Collection<E> {
-  get: (index: bigint) => E;
+  get: (index: number) => E;
   head: () => E | null;
-  insert: (index: bigint, t: E) => void;
+  insert: (index: number, t: E) => List<E>;
+  slice: (start: number, end: number) => List<E>;
   tail: () => List<E>;
 }
 
