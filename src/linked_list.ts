@@ -1,26 +1,22 @@
 import List from './list';
 import Node from './node';
+import { NotImplementedError } from './error';
 
-interface LinkedListNode<T> extends Node<T> {
-  next: LinkedListNode<T> | null;
+interface LinkedListNode<E> extends Node<E> {
+  next: LinkedListNode<E> | null;
 }
 
-class LinkedList<T> implements List<T> {
-  root: LinkedListNode<T> | null;
+class LinkedList<E> implements List<E> {
+  root: LinkedListNode<E> | null;
 
-  constructor(value: T | null = null) {
-    this.root = value
-      ? {
-          next: null,
-          value,
-        }
-      : null;
+  constructor() {
+    this.root = null;
   }
 
-  add(t: T): boolean {
+  add(e: E): boolean {
     const newNode = {
       next: null,
-      value: t,
+      value: e,
     };
 
     const node = this.lastNode();
@@ -33,11 +29,31 @@ class LinkedList<T> implements List<T> {
     return true;
   }
 
-  insert(index: number, t: T) {
-    // do nothing
+  empty(): boolean {
+    return this.size() !== BigInt(0);
   }
 
-  private lastNode(): LinkedListNode<T> | null {
+  get(index: BigInt): E {
+    throw new NotImplementedError();
+  }
+
+  head(): E | null {
+    throw new NotImplementedError();
+  }
+
+  insert(index: BigInt, e: E) {
+    throw new NotImplementedError();
+  }
+
+  size(): bigint {
+    throw new NotImplementedError();
+  }
+
+  tail(): List<E> {
+    throw new NotImplementedError();
+  }
+
+  private lastNode(): LinkedListNode<E> | null {
     if (this.root) {
       let node = this.root;
       while (node.next) {
