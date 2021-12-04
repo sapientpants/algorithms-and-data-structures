@@ -1,10 +1,11 @@
+import List from './list';
 import Node from './node';
 
 interface LinkedListNode<T> extends Node<T> {
   next: LinkedListNode<T> | null;
 }
 
-class LinkedList<T> {
+class LinkedList<T> implements List<T> {
   root: LinkedListNode<T> | null;
 
   constructor(value: T | null = null) {
@@ -16,10 +17,10 @@ class LinkedList<T> {
       : null;
   }
 
-  add(value: T) {
+  add(t: T): boolean {
     const newNode = {
       next: null,
-      value,
+      value: t,
     };
 
     const node = this.lastNode();
@@ -28,6 +29,12 @@ class LinkedList<T> {
     } else {
       this.root = newNode;
     }
+
+    return true;
+  }
+
+  insert(index: number, t: T) {
+    // do nothing
   }
 
   private lastNode(): LinkedListNode<T> | null {
