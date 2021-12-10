@@ -71,17 +71,11 @@ class LinkedList<E> implements List<E> {
       throw new IndexOutOfBoundsException();
     }
 
-    if (index === 0) {
-      const values = this.toArray();
-      values.unshift(e);
-      return new LinkedList<E>(values);
-    } else {
-      const values = this.toArray();
-      const first = values.slice(0, index);
-      const last = values.slice(index);
-      first.push(e);
-      return new LinkedList<E>(first.concat(last));
-    }
+    const values = this.toArray();
+    const first = values.slice(0, index);
+    const last = values.slice(index);
+    first.push(e);
+    return new LinkedList<E>(first.concat(last));
   }
 
   size(): number {
