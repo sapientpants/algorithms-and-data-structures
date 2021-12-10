@@ -7,8 +7,14 @@ interface LinkedListCons<E> extends Cons<E, LinkedListCons<E> | null> {}
 class LinkedList<E> implements List<E> {
   private root: LinkedListCons<E> | null;
 
-  constructor(...source: E[]) {
-    this.root = LinkedList.buildNodes<E>(source);
+  constructor(source: E[] | E | null = null) {
+    if (Array.isArray(source)) {
+      this.root = LinkedList.buildNodes<E>(source);
+    } else if (source == null) {
+      this.root = null;
+    } else {
+      this.root = LinkedList.buildNodes<E>([source]);
+    }
   }
 
   *[Symbol.iterator]() {
@@ -32,7 +38,7 @@ class LinkedList<E> implements List<E> {
     const values = this.toArray();
     values.push(e);
 
-    return new LinkedList<E>(...values);
+    return new LinkedList<E>(values);
   }
 
   empty(): boolean {
@@ -61,20 +67,21 @@ class LinkedList<E> implements List<E> {
   }
 
   insert(index: number, e: E): LinkedList<E> {
-    if (index < 0 || index >= this.size()) {
+    if (index < 0 || index > this.size()) {
       throw new IndexOutOfBoundsException();
     }
-    throw new NotImplementedError();
-    // if (index === 0) {
-    // } else {
-    //   const nodeBefore = this.getNode(index - 1);
-    //   const nodeAfter = nodeBefore.next;
-    //   const newNode: LinkedListNode<E> = {
-    //     next: nodeAfter,
-    //     value: e,
-    //   };
-    //   nodeBefore.next = newNode;
-    // }
+
+    if (index === 0) {
+      const values = this.toArray();
+      values.unshift(e);
+      return new LinkedList<E>(values);
+    } else {
+      const values = this.toArray();
+      const first = values.slice(0, index);
+      const last = values.slice(index);
+      first.push(e);
+      return new LinkedList<E>(first.concat(last));
+    }
   }
 
   size(): number {
@@ -94,7 +101,7 @@ class LinkedList<E> implements List<E> {
     }
 
     const values = this.toArray().slice(start, end);
-    return new LinkedList<E>(...values);
+    return new LinkedList<E>(values);
   }
 
   tail(): LinkedList<E> {

@@ -72,7 +72,28 @@ describe('LinkedList', () => {
     });
   });
 
-  describe('insert()', () => {});
+  describe('insert()', () => {
+    let src: LinkedList<string>;
+
+    beforeEach(() => {
+      src = new LinkedList<string>(['first', 'last']);
+    });
+
+    it('inserts at the front of the list', () => {
+      const out = src.insert(0, 'x');
+      expect(out.toArray()).toEqual(['x', 'first', 'last']);
+    });
+
+    it('inserts in the middle of the list', () => {
+      const out = src.insert(1, 'x');
+      expect(out.toArray()).toEqual(['first', 'x', 'last']);
+    });
+
+    it('inserts at the end of the list', () => {
+      const out = src.insert(2, 'x');
+      expect(out.toArray()).toEqual(['first', 'last', 'x']);
+    });
+  });
 
   describe('size()', () => {
     it('returns 0 for an empty linked list', () => {
