@@ -1,4 +1,4 @@
-interface Collection<E> {
+interface Collection<E> extends Iterable<E> {
   add: (e: E) => Collection<E>;
   empty: () => boolean;
   size: () => number;

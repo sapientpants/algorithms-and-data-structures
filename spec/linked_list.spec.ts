@@ -6,6 +6,21 @@ describe('LinkedList', () => {
     expect(linkedList[Symbol.iterator]).not.toBeNull();
   });
 
+  describe('constructor', () => {
+    it('builds an empty linked list', () => {
+      const linkedList = new LinkedList<string>();
+      expect(linkedList.size()).toBe(0);
+    });
+
+    it('builds a linked list with 1 element', () => {
+      const firstValue = 'one';
+      const linkedList = new LinkedList<string>(firstValue);
+      console.log(linkedList);
+      expect(linkedList.size()).toBe(1);
+      expect(linkedList.head()).toBe(firstValue);
+    });
+  });
+
   describe('add()', () => {
     it('adding a new node when root is null', () => {
       const value = 'value';

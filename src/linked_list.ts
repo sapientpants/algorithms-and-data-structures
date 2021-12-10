@@ -1,45 +1,41 @@
+import Cons, { ConsBuilder } from './cons';
 import List from './list';
-import Node from './node';
 import { IndexOutOfBoundsException, NotImplementedError } from './errors';
 
-interface LinkedListNode<E> extends Node<E> {
-  readonly next: LinkedListNode<E> | null;
-}
+interface LinkedListCons<E> extends Cons<E, LinkedListCons<E> | null> {}
 
 class LinkedList<E> implements List<E> {
-  private root: LinkedListNode<E> | null;
+  private root: LinkedListCons<E> | null;
 
-  constructor() {
-    this.root = null;
+  constructor(...source: E[]) {
+    this.root = LinkedList.buildNodes<E>(source);
   }
 
   *[Symbol.iterator]() {
     let node = this.root;
     while (node) {
-      yield node;
-      node = node.next;
+      yield node.car;
+      node = node.cdr;
     }
   }
 
-  add(e: E): LinkedList<E> {
-    let node: LinkedListNode<E> = {
-      next: null,
-      value: e,
-    };
-    const values = this.toArray();
-    let i = values.length - 1;
-
-    while (i >= 0) {
-      node = {
-        next: node,
-        value: values[i],
-      };
-      i--;
+  private static buildNodes<E>(source: Iterable<E>): LinkedListCons<E> | null {
+    const values = Array.from(source);
+    let node: LinkedListCons<E> | null = null;
+    for (let i = values.length - 1; i >= 0; i--) {
+      node = new ConsBuilder<E, LinkedListCons<E> | null>()
+        .withCar(values[i])
+        .withCdr(node)
+        .build();
     }
+    return node;
+  }
 
-    const newLinkedList = new LinkedList<E>();
-    newLinkedList.root = node;
-    return newLinkedList;
+  add(e: E): LinkedList<E> {
+    const values = this.toArray();
+    values.push(e);
+
+    return new LinkedList<E>(...values);
   }
 
   empty(): boolean {
@@ -47,27 +43,30 @@ class LinkedList<E> implements List<E> {
   }
 
   get(index: number): E {
-    return this.getNode(index).value;
+    return this.getNode(index).car;
   }
 
-  private getNode(index: number): LinkedListNode<E> {
+  private getNode(index: number): LinkedListCons<E> {
     if (index < 0 || index >= this.size()) {
       throw new IndexOutOfBoundsException();
     }
     let i = index;
-    let node = this.root as LinkedListNode<E>;
+    let n = this.root as LinkedListCons<E>;
     while (i > 0) {
-      node = node.next as LinkedListNode<E>;
+      n = n.cdr as LinkedListCons<E>;
       i--;
     }
-    return node;
+    return n;
   }
 
   head(): E | null {
-    return this.root ? this.root.value : null;
+    return this.root ? this.root.car : null;
   }
 
   insert(index: number, e: E): LinkedList<E> {
+    if (index < 0 || index >= this.size()) {
+      throw new IndexOutOfBoundsException();
+    }
     throw new NotImplementedError();
     // if (index === 0) {
     // } else {
@@ -97,25 +96,8 @@ class LinkedList<E> implements List<E> {
       throw new IndexOutOfBoundsException();
     }
 
-    const values = this.toArray();
-    let i = end - 1;
-
-    let node: LinkedListNode<E> = {
-      next: null,
-      value: values[i],
-    };
-
-    while (i >= start) {
-      node = {
-        next: node,
-        value: values[i],
-      };
-      i--;
-    }
-
-    const newLinkedList = new LinkedList<E>();
-    newLinkedList.root = node;
-    return newLinkedList;
+    const values = this.toArray().slice(start, end);
+    return new LinkedList<E>(...values);
   }
 
   tail(): LinkedList<E> {
@@ -125,8 +107,8 @@ class LinkedList<E> implements List<E> {
   toArray(): Array<E> {
     const elements: Array<E> = [];
 
-    for (let n of this) {
-      elements.push(n.value);
+    for (let e of this) {
+      elements.push(e);
     }
 
     return elements;
