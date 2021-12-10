@@ -1,4 +1,4 @@
-import Cons, { ConsBuilder } from './cons';
+import Cons, { cons } from './cons';
 import List from './list';
 import { IndexOutOfBoundsException, NotImplementedError } from './errors';
 
@@ -23,10 +23,7 @@ class LinkedList<E> implements List<E> {
     const values = Array.from(source);
     let node: LinkedListCons<E> | null = null;
     for (let i = values.length - 1; i >= 0; i--) {
-      node = new ConsBuilder<E, LinkedListCons<E> | null>()
-        .withCar(values[i])
-        .withCdr(node)
-        .build();
+      node = cons<E, LinkedListCons<E> | null>(values[i], node);
     }
     return node;
   }
