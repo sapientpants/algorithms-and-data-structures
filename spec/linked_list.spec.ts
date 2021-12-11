@@ -15,7 +15,6 @@ describe('LinkedList', () => {
     it('builds a linked list with 1 element', () => {
       const firstValue = 'one';
       const linkedList = new LinkedList<string>(firstValue);
-      console.log(linkedList);
       expect(linkedList.size()).toBe(1);
       expect(linkedList.head()).toBe(firstValue);
     });
